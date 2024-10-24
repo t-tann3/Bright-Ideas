@@ -73,7 +73,7 @@ const Login = () => {
                         <input
                             type="text"
                             className="form-control"
-                            id="email"
+                            // id="email"
                             onChange={(e) => {
                                 setEmail(e.target.value);
                                 validateField('email', e.target.value);
@@ -88,7 +88,7 @@ const Login = () => {
                         <input
                             type="password"
                             className="form-control"
-                            id="password"
+                            // id="password"
                             onChange={(e) => {
                                 setPassword(e.target.value);
                                 validateField('password', e.target.value);

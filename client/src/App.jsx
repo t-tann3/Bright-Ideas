@@ -1,9 +1,9 @@
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
-import Register from './views/Register.jsx'
-import ProfilePage from './views/ProfilePage.jsx'
-import PostDetails from './views/PostDetails.jsx'
-import Feed from './views/Feed.jsx'
+import Register from './components/Register.jsx'
+import ProfilePage from './components/ProfilePage.jsx'
+import PostDetails from './components/PostDetails.jsx'
+import Feed from './components/Feed.jsx'
 // import Login from './views/Login.jsx'
 
 

@@ -16,11 +16,11 @@ const Register = () => {
         const newErrors = { ...errors };
 
         if ( name === 'alias') {
-          if (value.length < 2) {
+            if (value.length < 2) {
             newErrors.name = "alias must be more than 2 characters";
-          } else {
+            } else {
             delete newErrors.name;
-          }
+            }
         }
 
         if (name === 'email') {
@@ -56,7 +56,7 @@ const Register = () => {
         const newErrors = {};
     
         if (firstName.length < 2) {
-          newErrors.username = "Username must be more than 2 characters";
+            newErrors.username = "Username must be more than 2 characters";
         }
         if (!email || email.length < 1) {
             newErrors.email = "Email is required";
@@ -79,6 +79,7 @@ const Register = () => {
         alias,
         email,
         password,
+        confirmPassword
     }
     axios.post('http://localhost:8000/api/register', newUser, {withCredentials: true})
         .then(() => {
@@ -92,9 +93,9 @@ const Register = () => {
         .catch((error) => {
             console.error('Error adding user:', error)
         });
-   }
+    }
 
-   const handleSignUpSubmit = (e) => {
+    const handleSignUpSubmit = (e) => {
     e.preventDefault();
     const formErrors = validateForm();
         if(Object.keys(formErrors).length > 0) {
@@ -109,7 +110,7 @@ const Register = () => {
     return(
         <>
         <div>
-         <form onSubmit={handleSignUpSubmit} className="border p-4 rounded shadow-sm">
+        <form onSubmit={handleSignUpSubmit} className="border p-4 rounded shadow-sm">
                 <div className="form-group mb-3">
                     <label htmlFor="username">Name</label>
                     <input
