@@ -109,6 +109,7 @@ const Register = () => {
 
     return(
         <>
+        <h1>Welcome!</h1>
         <div>
         <form onSubmit={handleSignUpSubmit} className="border p-4 rounded shadow-sm">
                 <div className="form-group mb-3">

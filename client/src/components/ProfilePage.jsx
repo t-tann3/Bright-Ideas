@@ -1,40 +1,42 @@
-import { useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
-import axios from "axios"
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 
+// const UserProfile = ({ id }) => {
+//   const [userData, setUserData] = useState({ name: '', alias: '', email: '' });
+//   const [error, setError] = useState(null);
 
-const ProfilePage = () => {
-    const { id } = useParams('');
-    const [name, setName] = useState('');
-    const [alias, setAlias] = useState('');
-    const [email, setEmail] = useState('');
-    const [posts, setPosts] = useState('');
-    const [likes, setLikes] = useState('');
+//   useEffect(() => {
+//     const fetchUserData = async () => {
+//       try {
+//         // Use template literals for the URL
+//         const { data } = await axios.get(`/api/users/${id}`);
+        
+//         // Update state with the received data
+//         setUserData(data);
+//       } catch (err) {
+//         // Set error state if the request fails
+//         setError('Error fetching user data');
+//       }
+//     };
 
+//     // Trigger data fetch
+//     fetchUserData();
+//   }, [userId]); // Re-run the effect if userId changes
 
-    useEffect(() => {
-        axios.get(`http:localhost:8000/api/profilepage/${id}`)
-            .then((response) => {
-                
-            })
-    })
-    
-    
-    
-    
-    return (
-        <>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        </>
-    )
-}
+//   // Return the UI
+//   if (error) return <p>{error}</p>;
 
-export default ProfilePage;
+//   return (
+//     <div>
+//       <h2>Name: {userData.name}</h2>
+//       <p>Alias: {userData.alias}</p>
+//       <p>Email: {userData.email}</p>
+//     </div>
+//         <h2>Total Number of Posts: </h2>
+//     <div>
+//         <p></p>
+//     </div>
+//   );
+// };
+
+// export default UserProfile;

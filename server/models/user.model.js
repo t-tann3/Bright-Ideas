@@ -39,6 +39,17 @@ const UserSchema = new Schema ({
                 required: [true, "Idea cannot be empty"],
                 minLength: [1, "Idea must have at least 1 character"],
                 maxLength: [500, "Idea cannot exceed 500 characters"]
+            },
+            likes: [
+                {
+                    type: Schema.Types.ObjectId, // stores the user IDs of who liked the post
+                    ref: 'User'
+                }
+            ],
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
             }
         }
     ]

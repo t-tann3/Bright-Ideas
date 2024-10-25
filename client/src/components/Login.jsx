@@ -8,6 +8,7 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
+
     const loginUser = () => {
         const loginInfo = {
             email,
@@ -16,10 +17,11 @@ const Login = () => {
     
         axios.post('http://localhost:8000/api/login', loginInfo)
             .then((response) => {
+                const {userId} = response.data
                 console.log('User logged in successfully', response);
                 setEmail('');
                 setPassword('');
-                navigate('/ideas');
+                navigate(`/ideas/${userId}`);
             })
             .catch((error) => {
                 console.log('Error logging in:', error);

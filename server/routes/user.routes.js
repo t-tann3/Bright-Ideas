@@ -7,6 +7,6 @@ router.post('/login', UserController.login)
 router.post('/logout', UserController.logout)
 router.post('/ideas', UserController.saveIdeas)
 router.get('/get/user/:id', UserController.getLoggedInUser)
-router.get('/ideas/:userId', UserController.getIdeas)
+router.get('/ideas', UserController.getIdeas)
 router.post('/deleteIdea', UserController.deleteIdeas)
 export default router;
