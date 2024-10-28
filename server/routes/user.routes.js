@@ -8,6 +8,6 @@ router.post('/logout', UserController.logout)
 router.post('/ideas', UserController.saveIdeas)
 router.get('/get/user/:userId', UserController.getLoggedInUser)
 router.get('/ideas', UserController.getIdeas)
-router.get('/ideas/ideaId', UserController.getIdeaById)
+router.get('/ideas/:ideaId', UserController.getIdeaById)
 router.post('/deleteIdea', UserController.deleteIdeas)
 export default router;

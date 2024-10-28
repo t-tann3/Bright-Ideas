@@ -6,8 +6,8 @@ const Feed = () => {
     const { userId } = useParams();
     const [newIdea, setNewIdea] = useState('') // for the input field
     const [ideas, setIdeas] = useState([]); // feed for the feed (array of ideas)
-    const [alias, setAlias] = useState([])
-
+    const [alias, setAlias] = useState([]);
+    
     // Fetches user info for the purposes of displaying next to each idea
     useEffect(() => {
         axios

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link, matchPath} from 'react-router-dom';
+import { useLocation, Link, matchPath, useParams} from 'react-router-dom';
 import axios from 'axios'
-
 
 const TopNav = (props) => {
     const location = useLocation();
+    const { ideaId } = useParams();
     const [user, setUser] = useState('')
     const match = matchPath('/ideas/:userId', location.pathname);
     const userId = match ? match.params.userId : null;
@@ -22,30 +22,38 @@ const TopNav = (props) => {
     }, [userId])
 
     let content;
-    if (location.pathname === '/postdetails' || location.pathname === `/profilepage/${userId}`) {
+
+    if (
+        location.pathname === '/'
+    ) {
+        // Home page or ideas page
         content = (
             <>
-            <Link to={`/ideas/${userId}`}>Bright Ideas</Link>
-            <Link to="/">Logout</Link>
+                <h1>Welcome!</h1>
+                <Link to="/">Logout</Link>
             </>
-        )
-    } else if (location.pathname === '/') {
+        );
+    } else if (/^\/postdetails/.test(location.pathname) || location.pathname === `/profilepage/${userId}`) {
+        // Matches any route that starts with /postdetails or is profile page
         content = (
-            <h1>Welcome!(top nav)</h1>
-        )
-    } else if(location.pathname === `/ideas/${userId}`) {
+            <>
+                <Link to={`/ideas/${userId}`}>Bright Ideas</Link>
+                <Link to="/">Logout</Link>
+            </>
+        );
+    } else if(location.pathname === `/ideas/${userId}`){
+        // Default or other pages
         content = (
-            <> 
-                <h1>Hi {user ? user.alias : 'User'}</h1>
-                <Link to='/'>Logout</Link>
-            </> 
-        )
+            <>
+                <h1>Hi {user ? user.alias : 'User'}!</h1>
+                <Link to="/">Logout</Link>
+            </>
+        );
     }
     
-
     return (
         <>
-            <div className='navleft'>
+            <div>
                 {content}
             </div>
         </>
