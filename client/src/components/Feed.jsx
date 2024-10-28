@@ -6,19 +6,37 @@ const Feed = () => {
     const { userId } = useParams();
     const [newIdea, setNewIdea] = useState('') // for the input field
     const [ideas, setIdeas] = useState([]); // feed for the feed (array of ideas)
+    const [alias, setAlias] = useState([])
 
-
+    // Fetches user info for the purposes of displaying next to each idea
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/ideas/`)
+        axios
+            .get(`http://localhost:8000/api/get/user/${userId}`)
+            .then((res) => {
+                console.log(res.data)
+                setAlias(res.data)
+            })
+            .catch((err) => {
+                console.log('unable to get logged in user', err)
+            })
+    }, [userId])
+
+
+    // Gets the feed of ideas
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/api/ideas/`)
             .then((response) => {
-                // console.log(response.data)
+                console.log(response.data)
                 setIdeas(response.data);
+
             })
             .catch((error) => {
                 console.error('Error fetching ideas:', error);
             });
 }, []);
 
+    //new post
     const makeNewPost = (e) => {
         e.preventDefault();
         const newPost = {
@@ -28,8 +46,9 @@ const Feed = () => {
                 likes: [], // initializes likes with an empty array
             },
         };
-
-        axios.post('http://localhost:8000/api/ideas', newPost)
+    // sends new post to the backend array of ideas
+        axios
+            .post('http://localhost:8000/api/ideas', newPost)
             .then((res) => {
                 console.log("Idea saved successfully", res.data);
                 setIdeas([...ideas, res.data]);
@@ -39,6 +58,9 @@ const Feed = () => {
                 console.log("Unable to save idea", err)
             })
             
+
+
+
     }
         return (
             <>
@@ -46,7 +68,6 @@ const Feed = () => {
                 <form onSubmit={makeNewPost}>
                     <label>New Idea: </label>
                     <input type="text" 
-                    name="new-idea" 
                     value={newIdea}
                     onChange={e => setNewIdea(e.target.value)}
                     placeholder="Post something witty here..."
@@ -59,7 +80,8 @@ const Feed = () => {
                     {ideas.map((idea) => (
                         <div key={idea._id}>
                             <p>{idea.text}</p>
-                            <Link to="/postdetails">
+                            <p>{idea.userAlias}</p>
+                            <Link to={`/postdetails/${idea._id}`}>
                             <p>Likes: {idea.likes.length}</p>
                             </Link>
                         </div>

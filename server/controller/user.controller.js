@@ -67,8 +67,8 @@ export const UserController = {
     //get logged in user not sure if we need this 
     getLoggedInUser: async (req, res) => {
         try{
-            const {id} = req.params
-            const user = await User.findById(id)
+            const {userId} = req.params
+            const user = await User.findById(userId)
             res.status(200).json(user)
         }
         catch (err) {
@@ -91,17 +91,47 @@ export const UserController = {
         }
     },
 
+
+    //Get ideas for feed
     getIdeas: async (req, res) => {
         try {
-            const allIdeas = await User.find().select('ideas');
-            const ideas = allIdeas.flatMap(user => user.ideas);
-            console.log('All ideas', ideas);
+            // Fetch each user with their alias and ideas
+            const allUsers = await User.find().select('alias ideas');
+
+            // Combine each idea with its user alias
+            const ideas = allUsers.flatMap(user => 
+                user.ideas.map(idea => ({
+                ...idea.toObject(),
+                userAlias: user.alias
+                }))
+            )
+
+            console.log('All ideas with user aliases', ideas);
             res.status(200).json(ideas);
-        } catch (err) {
-            res.status(500).json({ message: "Error fetching ideas", error: err})
+        } catch(err){
+            res.status(500).json({message: 'Error fetching ideas', error: err});
         }
     },
-    
+
+
+    // Get ideas by ID, specifically for postDetails.jsx
+    getIdeaById: async (req, res) => {
+        try {
+            const { ideaId } = req.params;
+            const idea = await User.findOne(
+                { "ideas._id": ideaId },
+                { "ideas.$": 1 }
+            ).populate("ideas.likes"); 
+            if (!idea) {
+                return res.status(404).json({ message: "Idea not found"});
+            }
+            res.status(200).json(idea.ideas[0]);
+        } catch (err) {
+            res.status(500).json({ message: "Error fetching idea", error: err});
+        }
+    },
+
+    // Delete ideas
     deleteIdeas: async (req, res) => {
         const {userId, idea} = req.body;
         try {
