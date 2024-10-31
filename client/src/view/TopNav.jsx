@@ -51,17 +51,27 @@ const TopNav = () => {
     }
 
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
-            <Container>
-                <Navbar.Brand href="/">SocialApp</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <div className="container">
+                <Link to="/" className="navbar-brand">Nav Bar</Link>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarContent"
+                    aria-controls="navbarContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarContent">
+                    <div className="navbar-nav me-auto">
                         {content}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                    </div>
+                </div>
+            </div>
+        </nav>
     );
 };
 
