@@ -29,45 +29,45 @@ const PostDetails = () => {
 
     return (
         <>
-            <div className="container mt-5">
-        <h1 className="mb-4">Post Details Page</h1>
-        {idea ? (
-            <div>
-                {/* Display idea text */}
-                <div className="border rounded p-3 mb-4 bg-light">
-                    <p className="mb-0">{idea.text}</p>
-                </div>
-                
-                <h3 className="mb-3">People who liked this post:</h3>
-                {idea.likes.length > 0 ? (
-                    <table className="table table-striped">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th>Alias</th>
-                                <th>Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {idea.likes.map((like) => (
-                                <tr key={like._id}>
-                                    <td>{like.alias}</td>
-                                    <td>
-                                        <Link to={`/profilepage/${like._id}`} className="text-decoration-none">
-                                            {like.firstName}
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p className="text-muted">No likes yet.</p>
-                )}
+        <div className="container mt-5">
+    <h1 className="text-center mb-4">Post Details Page</h1>
+    {idea ? (
+        <div>
+            {/* Display idea text */}
+            <div className="card p-3 mb-4 shadow-sm bg-light">
+                <p className="card-text mb-0">{idea.text}</p>
             </div>
-        ) : (
-            <p>Loading...</p>
-        )}
-    </div>
+            
+            <h3 className="mb-3">People who liked this post:</h3>
+            {idea.likes.length > 0 ? (
+                <table className="table table-striped shadow-sm">
+                    <thead className="table-dark">
+                        <tr>
+                            <th>Alias</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {idea.likes.map((like) => (
+                            <tr key={like._id}>
+                                <td>{like.alias}</td>
+                                <td>
+                                    <Link to={`/profilepage/${like._id}`} className="text-decoration-none">
+                                        {like.firstName}
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <p className="text-muted">No likes yet.</p>
+            )}
+        </div>
+    ) : (
+        <p>Loading...</p>
+    )}
+</div>
         </>
     );
 };

@@ -109,8 +109,12 @@ const Register = () => {
 
     return(
         <>
-        <div>
-        <form onSubmit={handleSignUpSubmit} className="border p-4 rounded shadow-sm">
+        <div className="container mt-5">
+    <div className="row justify-content-center">
+        {/* Registration Form */}
+        <div className="col-md-5">
+            <form onSubmit={handleSignUpSubmit} className="border p-4 rounded shadow-sm">
+                <h3 className="text-center mb-4">Sign Up</h3>
                 <div className="form-group mb-3">
                     <label htmlFor="username">Name</label>
                     <input
@@ -125,7 +129,7 @@ const Register = () => {
                         value={firstName}
                         required
                     />
-                    {errors.name && <p style={{ color: 'white' }}>{errors.name}</p>}
+                    {errors.name && <p className="text-danger">{errors.name}</p>}
                 </div>
                 <div className="form-group mb-3">
                     <label htmlFor="alias">Alias</label>
@@ -141,9 +145,8 @@ const Register = () => {
                         value={alias}
                         required
                     />
-                    {errors.alias && <p style={{ color: 'white' }}>{errors.alias}</p>}
+                    {errors.alias && <p className="text-danger">{errors.alias}</p>}
                 </div>
-
                 <div className="form-group mb-3">
                     <label htmlFor="email">Email</label>
                     <input
@@ -158,9 +161,8 @@ const Register = () => {
                         value={email}
                         required
                     />
-                    {errors.email && <p style={{ color: 'white' }}>{errors.email}</p>}
+                    {errors.email && <p className="text-danger">{errors.email}</p>}
                 </div>
-
                 <div className="form-group mb-3">
                     <label htmlFor="password">Password</label>
                     <input
@@ -175,35 +177,39 @@ const Register = () => {
                         value={password}
                         required
                     />
-                    {errors.password && <p style={{ color: 'white' }}>{errors.password}</p>}
+                    {errors.password && <p className="text-danger">{errors.password}</p>}
                 </div>
-
                 <div className="form-group mb-3">
                     <label htmlFor="confirm password">Confirm Password</label>
                     <input
                         type="password"
                         className="form-control"
-                        id="confirm password"
+                        id="confirmPassword"
                         placeholder="Confirm Password"
-                        onChange={(e) => {setConfirmPassword(e.target.value);
+                        onChange={(e) => {
+                            setConfirmPassword(e.target.value);
                             validateField('confirm password', e.target.value);
                         }}
                         value={confirmPassword}
                         required
                     />
-                    {errors.confirmPassword && <p style={{ color: 'white' }}>{errors.confirmPassword}</p>}
+                    {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword}</p>}
                 </div>
-
                 <button type="submit" className="btn btn-primary w-100">
                     Sign Up
                 </button>
             </form>
         </div>
-        <div className="container mt-5">
-                <div>
-                    <Login/>
-                </div>
+
+        {/* Login Form */}
+        <div className="col-md-5">
+            <div className="border p-4 rounded shadow-sm">
+                <h3 className="text-center mb-4">Login</h3>
+                <Login />
             </div>
+        </div>
+    </div>
+</div>
         </>    
     )
 }

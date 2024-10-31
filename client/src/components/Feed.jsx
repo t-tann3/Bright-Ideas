@@ -91,10 +91,11 @@ const Feed = () => {
 
     return (
         <>
-          <div className="container mt-5">
-        {/* Form to create a new post */}
-        <form onSubmit={makeNewPost} className="d-flex mb-4 align-items-center">
-            <label htmlFor="newIdea" className="form-label me-2">New Idea:</label>
+        <div className="container mt-5">
+    {/* Form to create a new post */}
+    <div className="border p-4 rounded shadow-sm mb-4">
+        <form onSubmit={makeNewPost} className="d-flex align-items-center">
+            <label htmlFor="newIdea" className="form-label me-2 mb-0">New Idea:</label>
             <input 
                 type="text"
                 id="newIdea"
@@ -106,33 +107,34 @@ const Feed = () => {
             />
             <button type="submit" className="btn btn-primary">Post</button>
         </form>
-
-        {/* Feed heading */}
-        <h1 className="mb-4">Feed</h1>
-
-        {/* List of ideas in the feed */}
-        <div className="d-flex flex-column gap-3">
-            {ideas.map((idea) => (
-                <div key={idea._id} className="card p-3">
-                    <p className="card-text">{idea.text}</p>
-                    <p className="text-muted">Posted by: {idea.userAlias}</p>
-                    <Link to={`/postdetails/${idea._id}`} className="text-decoration-none">
-                        <p className="mb-2">Likes: {idea.likes.length}</p>
-                    </Link>
-                    <div className="d-flex gap-2">
-                        <button onClick={() => likeIdea(idea._id)} className="btn btn-outline-primary">
-                            Like
-                        </button>
-                        {String(idea.userId) === String(userId) && (
-                            <button onClick={() => deleteIdea(idea._id)} className="btn btn-outline-danger">
-                                Delete
-                            </button>
-                        )}
-                    </div>
-                </div>
-            ))}
-        </div>
     </div>
+
+    {/* Feed heading */}
+    <h1 className="text-center mb-4">Feed</h1>
+
+    {/* List of ideas in the feed */}
+    <div className="d-flex flex-column gap-3">
+        {ideas.map((idea) => (
+            <div key={idea._id} className="card p-3 shadow-sm">
+                <p className="card-text">{idea.text}</p>
+                <p className="text-muted">Posted by: <strong>{idea.userAlias}</strong></p>
+                <Link to={`/postdetails/${idea._id}`} className="text-decoration-none">
+                    <p className="text-muted mb-2">Likes: {idea.likes.length}</p>
+                </Link>
+                <div className="d-flex gap-2">
+                    <button onClick={() => likeIdea(idea._id)} className="btn btn-outline-primary btn-sm">
+                        Like
+                    </button>
+                    {String(idea.userId) === String(userId) && (
+                        <button onClick={() => deleteIdea(idea._id)} className="btn btn-outline-danger btn-sm">
+                            Delete
+                        </button>
+                    )}
+                </div>
+            </div>
+        ))}
+    </div>
+</div>
         </>
     );
 };
