@@ -203,10 +203,8 @@ const Register = () => {
 
         {/* Login Form */}
         <div className="col-md-5">
-            <div className="border p-4 rounded shadow-sm">
-                <h3 className="text-center mb-4">Login</h3>
+            
                 <Login />
-            </div>
         </div>
     </div>
 </div>

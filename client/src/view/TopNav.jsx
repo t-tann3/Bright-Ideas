@@ -4,11 +4,11 @@ import axios from 'axios';
 
 const TopNav = () => {
     const location = useLocation();
-    const { userId } = useParams();
+    const { userId } = useParams(); // Get userId from params or fallback to undefined
     const [user, setUser] = useState(null);
-
     useEffect(() => {
         console.log("Fetching user data for userId:", userId);
+        console.log(userId)
         if (userId) {
             axios
                 .get(`http://localhost:8000/api/get/user/${userId}`)
@@ -37,8 +37,8 @@ const TopNav = () => {
     } else if (/^\/postdetails/.test(location.pathname) || location.pathname === `/profilepage/${userId}`) {
         content = (
             <>
-                <Link to={`/ideas/${userId}`} className="nav-link text-white">Bright Ideas</Link>
-                <Link to="/" className="nav-link text-white">Logout</Link>
+                <Link to={`/ideas/${userId}`}>Bright Ideas</Link>
+                <Link to="/">Logout</Link>
             </>
         );
     } else if (location.pathname === `/ideas/${userId}`) {
@@ -48,32 +48,13 @@ const TopNav = () => {
                 <Link to="/" className="nav-link text-white">Logout</Link>
             </>
         );
-    }
+    } 
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-            <div className="container">
-                <Link to="/" className="navbar-brand">Nav Bar</Link>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarContent"
-                    aria-controls="navbarContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarContent">
-                    <div className="navbar-nav me-auto">
-                        {content}
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div>
+            {content}
+        </div>
     );
 };
-
 
 export default TopNav;

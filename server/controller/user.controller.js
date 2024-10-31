@@ -80,31 +80,37 @@ export const UserController = {
         }
     },
     
-
     saveIdeas: async (req, res) => {
-        const { userId, ideaText } = req.body; // Make sure to extract the idea text
+        const { userId, ideaText } = req.body; // Ensure you're extracting the idea text
         try {
             const idea = {
-                text: ideaText, // Assuming you are sending this in the request
+                text: ideaText, // Text of the idea
                 userId: userId, // Link idea to the user
                 likes: [] // Initialize likes array
             };
     
-            await User.findByIdAndUpdate(
+            // Save the idea to the user's ideas array
+            const updatedUser = await User.findByIdAndUpdate(
                 userId,
                 { $push: { ideas: idea } },
-                { new: true }
+                { new: true, useFindAndModify: false } // Get the updated user object
             );
-            console.log('Idea has been posted!');
-            res.status(201).json({ message: "Idea posted successfully!" });
+    
+            // Find the new idea added to the user's ideas array
+            const newIdea = updatedUser.ideas[updatedUser.ideas.length - 1]; // Get the latest idea
+    
+            // Optionally, find the user to get their details (e.g., username)
+            const user = await User.findById(userId).select('username'); // Assuming you have a username field
+    
+            res.status(201).json({ ...newIdea, username: user.username }); // Return the new idea with the username
         } catch (error) {
             console.log('Error posting idea:', error);
             res.status(500).json({ message: "Error posting idea", error });
         }
     },
     
+    
 
-    //Get ideas for feed
 // Get ideas for feed
 getIdeas: async (req, res) => {
     try {

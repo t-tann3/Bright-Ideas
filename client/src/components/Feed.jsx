@@ -37,29 +37,26 @@ const Feed = () => {
         fetchIdeas();
     }, []);
 
-    // Post a new idea
-    const makeNewPost = (e) => {
-        e.preventDefault();
-        const newPost = {
-            userId,
-            idea: {
-                text: newIdea, // Posts the entered idea text
-                likes: [], // Initializes likes with an empty array
-            },
-        };
-
-        // Send new post to the backend array of ideas
-        axios
-            .post('http://localhost:8000/api/ideas', newPost)
-            .then((res) => {
-                console.log("Idea saved successfully", res.data);
-                setNewIdea(''); // Clear the input field
-                setIdeas([...ideas, res.data]); // Add the new idea to the existing ideas without refetching
-            })
-            .catch((err) => {
-                console.log("Unable to save idea", err);
-            });
+    //Get feed
+const makeNewPost = (e) => {
+    e.preventDefault();
+    const newPost = {
+        userId,
+        ideaText: newIdea, // Send the idea text instead of an object
     };
+
+    // Send new post to the backend array of ideas
+    axios
+        .post('http://localhost:8000/api/ideas', newPost)
+        .then((res) => {
+            console.log("Idea saved successfully", res.data);
+            setNewIdea(''); // Clear the input field
+            setIdeas([...ideas, res.data]); // Add the new idea to the existing ideas without refetching
+        })
+        .catch((err) => {
+            console.log("Unable to save idea", err);
+        });
+};
 
     const likeIdea = (ideaId) => {
         axios
@@ -91,52 +88,56 @@ const Feed = () => {
 
     return (
         <>
-        <div className="container mt-5">
-    {/* Form to create a new post */}
-    <div className="border p-4 rounded shadow-sm mb-4">
-        <form onSubmit={makeNewPost} className="d-flex align-items-center">
-            <label htmlFor="newIdea" className="form-label me-2 mb-0">New Idea:</label>
-            <input 
-                type="text"
-                id="newIdea"
-                className="form-control me-2"
-                value={newIdea}
-                onChange={(e) => setNewIdea(e.target.value)}
-                placeholder="Post something witty here..."
-                required
-            />
-            <button type="submit" className="btn btn-primary">Post</button>
-        </form>
-    </div>
-
-    {/* Feed heading */}
-    <h1 className="text-center mb-4">Feed</h1>
-
-    {/* List of ideas in the feed */}
-    <div className="d-flex flex-column gap-3">
-        {ideas.map((idea) => (
-            <div key={idea._id} className="card p-3 shadow-sm">
-                <p className="card-text">{idea.text}</p>
-                <p className="text-muted">Posted by: <strong>{idea.userAlias}</strong></p>
-                <Link to={`/postdetails/${idea._id}`} className="text-decoration-none">
-                    <p className="text-muted mb-2">Likes: {idea.likes.length}</p>
-                </Link>
-                <div className="d-flex gap-2">
-                    <button onClick={() => likeIdea(idea._id)} className="btn btn-outline-primary btn-sm">
-                        Like
-                    </button>
-                    {String(idea.userId) === String(userId) && (
-                        <button onClick={() => deleteIdea(idea._id)} className="btn btn-outline-danger btn-sm">
-                            Delete
-                        </button>
-                    )}
+        <div className="topNav">
+        <Link to="/">Logout</Link>
+        </div>
+            <div>
+                {/* Form to create a new post */}
+                <div>
+                    <form onSubmit={makeNewPost}>
+                        <label>New Idea:</label>
+                        <input
+                            type="text"
+                            id="newIdea"
+                            value={newIdea}
+                            onChange={(e) => setNewIdea(e.target.value)}
+                            placeholder="Post something witty here..."
+                            required
+                        />
+                        <button type="submit">Post</button>
+                    </form>
                 </div>
+    
+                {/* Feed heading */}
+                <h1>Feed</h1>
+    
+                {/* List of ideas in the feed */}
+                <div>
+    {ideas.map((idea, index) => (
+        <div key={idea._id || index}> {/* Use index as a fallback if idea._id is missing */}
+            <p>{idea.text}</p>
+            <p>Posted by: <strong>{idea.userAlias}</strong></p>
+            <Link to={`/postdetails/${idea._id}`}>
+                <p>Likes: {idea.likes ? idea.likes.length : 0}</p>
+            </Link>
+            <div>
+                <button onClick={() => likeIdea(idea._id)}>
+                    Like
+                </button>
+                {String(idea.userId) === String(userId) && (
+                    <button onClick={() => deleteIdea(idea._id)}>
+                        Delete
+                    </button>
+                )}
             </div>
-        ))}
-    </div>
+        </div>
+    ))}
 </div>
+    
+            </div>
         </>
     );
+    
 };
 
 export default Feed;

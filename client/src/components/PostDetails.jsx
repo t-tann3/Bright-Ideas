@@ -29,6 +29,12 @@ const PostDetails = () => {
 
     return (
         <>
+
+
+        <div className="topNav">
+        {/* <Link to={`/ideas/${userId}`}>Bright Ideas</Link> */}
+        <Link to="/">Logout</Link>
+        </div>
         <div className="container mt-5">
     <h1 className="text-center mb-4">Post Details Page</h1>
     {idea ? (
