@@ -1,42 +1,53 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-// const UserProfile = ({ id }) => {
-//   const [userData, setUserData] = useState({ name: '', alias: '', email: '' });
-//   const [error, setError] = useState(null);
+const ProfilePage = () => {
+    const { userId } = useParams();
+    console.log("User ID from URL:", userId); // Debugging log
 
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         // Use template literals for the URL
-//         const { data } = await axios.get(`/api/users/${id}`);
-        
-//         // Update state with the received data
-//         setUserData(data);
-//       } catch (err) {
-//         // Set error state if the request fails
-//         setError('Error fetching user data');
-//       }
-//     };
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-//     // Trigger data fetch
-//     fetchUserData();
-//   }, [userId]); // Re-run the effect if userId changes
+    useEffect(() => {
+        if (userId) {
+            axios
+                .get(`http://localhost:8000/api/get/user/${userId}`)
+                .then((res) => {
+                    console.log("API Response:", res.data); // Log the full response
+                    setUser(res.data);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.error("Error fetching user details", err);
+                    setLoading(false);
+                });
+        } else {
+            console.error("User ID is undefined.");
+            setLoading(false);
+        }
+    }, [userId]);
 
-//   // Return the UI
-//   if (error) return <p>{error}</p>;
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
-//   return (
-//     <div>
-//       <h2>Name: {userData.name}</h2>
-//       <p>Alias: {userData.alias}</p>
-//       <p>Email: {userData.email}</p>
-//     </div>
-//         <h2>Total Number of Posts: </h2>
-//     <div>
-//         <p></p>
-//     </div>
-//   );
-// };
+    if (!user) {
+        return <p>User not found.</p>;
+    }
 
-// export default UserProfile;
+    return (
+        <div>
+            <h1>Profile Page</h1>
+            <div>
+                <h2>Name: {user.firstName}</h2>
+                <h3>Alias: {user.alias}</h3>
+                <p>Email: {user.email}</p>
+                <p>Total Number of Posts: {Array.isArray(user.ideas) ? user.ideas.length : 0}</p>
+                <p>Total Number of Likes: {Array.isArray(user.likes) ? user.likes.length : 0}</p>
+            </div>
+        </div>
+    );
+};
+
+export default ProfilePage;

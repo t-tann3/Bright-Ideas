@@ -10,4 +10,5 @@ router.get('/get/user/:userId', UserController.getLoggedInUser)
 router.get('/ideas', UserController.getIdeas)
 router.get('/ideas/:ideaId', UserController.getIdeaById)
 router.post('/deleteIdea', UserController.deleteIdeas)
+router.post('/ideas/:userId/:ideaId/like', UserController.likeIdea)
 export default router;
