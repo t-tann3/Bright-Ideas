@@ -37,16 +37,16 @@ const ProfilePage = () => {
     }
 
     return (
-        <div>
-            <h1>Profile Page</h1>
-            <div>
-                <h2>Name: {user.firstName}</h2>
-                <h3>Alias: {user.alias}</h3>
-                <p>Email: {user.email}</p>
-                <p>Total Number of Posts: {Array.isArray(user.ideas) ? user.ideas.length : 0}</p>
-                <p>Total Number of Likes: {Array.isArray(user.likes) ? user.likes.length : 0}</p>
-            </div>
+        <div className="container mt-5">
+        <h1 className="mb-4">Profile Page</h1>
+        <div className="border rounded p-4 bg-light">
+            <h2 className="mb-3">Name: {user.firstName}</h2>
+            <h3 className="text-muted mb-3">Alias: {user.alias}</h3>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Total Number of Posts:</strong> {Array.isArray(user.ideas) ? user.ideas.length : 0}</p>
+            <p><strong>Total Number of Likes:</strong> {Array.isArray(user.likes) ? user.likes.length : 0}</p>
         </div>
+    </div>
     );
 };
 

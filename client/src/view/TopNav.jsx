@@ -30,31 +30,40 @@ const TopNav = () => {
     if (location.pathname === '/') {
         content = (
             <>
-                <h1>Welcome!</h1>
-                <Link to="/">Logout</Link>
+                <h1 className="text-white">Welcome!</h1>
+                <Link to="/" className="nav-link text-white">Logout</Link>
             </>
         );
     } else if (/^\/postdetails/.test(location.pathname) || location.pathname === `/profilepage/${userId}`) {
         content = (
             <>
-                <Link to={`/ideas/${userId}`}>Bright Ideas</Link>
-                <Link to="/">Logout</Link>
+                <Link to={`/ideas/${userId}`} className="nav-link text-white">Bright Ideas</Link>
+                <Link to="/" className="nav-link text-white">Logout</Link>
             </>
         );
     } else if (location.pathname === `/ideas/${userId}`) {
         content = (
             <>
-                <h1>Hi {user ? user.alias : 'User'}!</h1>
-                <Link to="/">Logout</Link>
+                <h1 className="text-white">Hi {user ? user.alias : 'User'}!</h1>
+                <Link to="/" className="nav-link text-white">Logout</Link>
             </>
         );
     }
 
     return (
-        <div>
-            {content}
-        </div>
+        <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+            <Container>
+                <Navbar.Brand href="/">SocialApp</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        {content}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 };
+
 
 export default TopNav;

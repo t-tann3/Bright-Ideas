@@ -91,34 +91,48 @@ const Feed = () => {
 
     return (
         <>
-            {/* Form to create new post */}
-            <form onSubmit={makeNewPost}>
-                <label>New Idea: </label>
-                <input 
-                    type="text"
-                    value={newIdea}
-                    onChange={(e) => setNewIdea(e.target.value)}
-                    placeholder="Post something witty here..."
-                />
-                <button type="submit"> Idea! </button>
-            </form>
+          <div className="container mt-5">
+        {/* Form to create a new post */}
+        <form onSubmit={makeNewPost} className="d-flex mb-4 align-items-center">
+            <label htmlFor="newIdea" className="form-label me-2">New Idea:</label>
+            <input 
+                type="text"
+                id="newIdea"
+                className="form-control me-2"
+                value={newIdea}
+                onChange={(e) => setNewIdea(e.target.value)}
+                placeholder="Post something witty here..."
+                required
+            />
+            <button type="submit" className="btn btn-primary">Post</button>
+        </form>
 
-            <h1>Feed</h1>
-            <div>
-                {ideas.map((idea) => (
-                    <div key={idea._id}>
-                        <p>{idea.text}</p>
-                        <p>{idea.userAlias}</p>
-                        <Link to={`/postdetails/${idea._id}`}>
-                            <p>Likes: {idea.likes.length}</p>
-                        </Link>
-                        <button onClick={() => likeIdea(idea._id)}>Like</button>
+        {/* Feed heading */}
+        <h1 className="mb-4">Feed</h1>
+
+        {/* List of ideas in the feed */}
+        <div className="d-flex flex-column gap-3">
+            {ideas.map((idea) => (
+                <div key={idea._id} className="card p-3">
+                    <p className="card-text">{idea.text}</p>
+                    <p className="text-muted">Posted by: {idea.userAlias}</p>
+                    <Link to={`/postdetails/${idea._id}`} className="text-decoration-none">
+                        <p className="mb-2">Likes: {idea.likes.length}</p>
+                    </Link>
+                    <div className="d-flex gap-2">
+                        <button onClick={() => likeIdea(idea._id)} className="btn btn-outline-primary">
+                            Like
+                        </button>
                         {String(idea.userId) === String(userId) && (
-                            <button onClick={() => deleteIdea(idea._id)}>Delete</button>
+                            <button onClick={() => deleteIdea(idea._id)} className="btn btn-outline-danger">
+                                Delete
+                            </button>
                         )}
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
+        </div>
+    </div>
         </>
     );
 };
